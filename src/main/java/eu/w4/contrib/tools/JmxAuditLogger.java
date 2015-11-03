@@ -260,6 +260,11 @@ public class JmxAuditLogger
       jmxAuditLogger.addMonitor(new ThreadMonitor("eu.w4.", "leon"));
     }
 
+    if (audits.contains("heap"))
+    {
+      jmxAuditLogger.addMonitor(new JavaMemoryMonitor());
+    }
+
     final Timer timer = new Timer();
     timer.schedule(new TimerTask()
     {
