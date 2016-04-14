@@ -47,11 +47,12 @@ Use the following command to run the utility
 
 Following switches can be enabled/disabled using either + or - prefixes
 
-    +/-mpool        audit database pool usage    (default: enabled)
-    +/-mprincipal   audit session principals     (default: enabled)
-    +/-mtransaction audit transaction principals (default: enabled)
-    +/-mthread      audit threads                (default: disabled)
-    +/-mheap        audit heap memory............(default: disabled)
+    +/-mpool        audit database pool usage          (default: enabled)
+    +/-mprincipal   audit session principals           (default: enabled)
+    +/-mtransaction audit transaction principals       (default: enabled)
+    +/-mthread      audit threads (with w4 code only)  (default: disabled)
+    +/-mallthread   audit *all* threads                (default: disabled)
+    +/-mheap        audit heap memory                  (default: disabled)
 
 
 ### Examples

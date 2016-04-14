@@ -161,10 +161,12 @@ public class JmxAuditLogger
     System.out.println();
     System.out.println("Following switches can be enabled/disabled using either + or - prefixes");
     System.out.println();
-    System.out.println("+/-mpool        audit database pool usage    (default: enabled)");
-    System.out.println("+/-mprincipal   audit session principals     (default: enabled)");
-    System.out.println("+/-mtransaction audit transaction principals (default: enabled)");
-    System.out.println("+/-mthread      audit threads                (default: disabled)");
+    System.out.println("+/-mpool        audit database pool usage           (default: enabled)");
+    System.out.println("+/-mprincipal   audit session principals            (default: enabled)");
+    System.out.println("+/-mtransaction audit transaction principals        (default: enabled)");
+    System.out.println("+/-mthread      audit threads (with w4 code only)   (default: disabled)");
+    System.out.println("+/-mallthread   audit *all* threads                 (default: disabled)");
+    System.out.println("+/-mheap        audit heap memory                   (default: disabled)");
     System.out.println();
     System.out.println("Example");
     System.out.println();
@@ -259,6 +261,11 @@ public class JmxAuditLogger
     if (audits.contains("thread"))
     {
       jmxAuditLogger.addMonitor(new ThreadMonitor("eu.w4.", "leon"));
+    }
+
+    if (audits.contains("allthread"))
+    {
+      jmxAuditLogger.addMonitor(new ThreadMonitor());
     }
 
     if (audits.contains("heap"))

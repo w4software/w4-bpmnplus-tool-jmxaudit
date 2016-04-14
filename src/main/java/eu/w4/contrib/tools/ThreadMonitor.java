@@ -33,6 +33,10 @@ public class ThreadMonitor extends AbstractJmxMonitor
 
   private boolean isThreadSelected(final ThreadInfo threadInfo)
   {
+    if (_patterns == null || _patterns.isEmpty())
+    {
+      return true;
+    }
     final StackTraceElement[] stacktrace = threadInfo.getStackTrace();
     for (final StackTraceElement element : stacktrace)
     {
