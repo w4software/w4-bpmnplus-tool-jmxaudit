@@ -4,7 +4,7 @@
 
   <groupId>eu.w4.contrib</groupId>
   <artifactId>bpmnplus-tool-jmxaudit</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>jmxaudit</name>
