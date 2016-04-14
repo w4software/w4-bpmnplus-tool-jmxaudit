@@ -54,6 +54,7 @@ public class JmxAuditLogger
     _login = login;
     _password = password;
     _monitors = new ArrayList<JmxMonitor>();
+    _output = new JmxAuditWriter(System.err);
     connect();
   }
 
