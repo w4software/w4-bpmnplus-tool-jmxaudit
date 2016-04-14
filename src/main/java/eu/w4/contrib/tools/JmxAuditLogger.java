@@ -17,12 +17,8 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
+import javax.management.JMException;
 import javax.management.MBeanServerConnection;
-import javax.management.MalformedObjectNameException;
-import javax.management.ReflectionException;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
@@ -103,8 +99,7 @@ public class JmxAuditLogger
     {
       monitor.dump();
     }
-    catch (InstanceNotFoundException | MalformedObjectNameException | AttributeNotFoundException
-      | ReflectionException | MBeanException e)
+    catch (final JMException e)
     {
       _output.println("Could not log [" + monitor.getClass().getSimpleName() + "] because of " + e.getClass() + " " + e.getMessage());
     }
@@ -125,7 +120,12 @@ public class JmxAuditLogger
         _output.println();
       }
     }
-    catch (java.rmi.ConnectException | java.net.ConnectException e)
+    catch (final java.rmi.ConnectException e)
+    {
+      _output.println("Connection lost... trying to reconnect");
+      connect();
+    }
+    catch (final java.net.ConnectException e)
     {
       _output.println("Connection lost... trying to reconnect");
       connect();

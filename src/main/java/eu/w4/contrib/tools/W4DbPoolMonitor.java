@@ -31,10 +31,10 @@ public class W4DbPoolMonitor extends AbstractJmxMonitor
   {
     getWriter().printTitle(getTitle());
     final ObjectName databaseConnectionBeanName = new ObjectName(DATABASE_CONNECTION_MBEAN);
-    final int numberOfFreeConnections = (int) getMbeanServer().getAttribute(databaseConnectionBeanName,
+    final int numberOfFreeConnections = (Integer) getMbeanServer().getAttribute(databaseConnectionBeanName,
                                                                             "NumberOfFreeConnections");
-    final int poolMaximumSize = (int) getMbeanServer().getAttribute(databaseConnectionBeanName, "PoolMaximumSize");
-    final int poolSize = (int) getMbeanServer().getAttribute(databaseConnectionBeanName, "PoolSize");
+    final int poolMaximumSize = (Integer) getMbeanServer().getAttribute(databaseConnectionBeanName, "PoolMaximumSize");
+    final int poolSize = (Integer) getMbeanServer().getAttribute(databaseConnectionBeanName, "PoolSize");
     final TabularData connectionInfos = (TabularData) getMbeanServer().getAttribute(databaseConnectionBeanName,
                                                                                 "ConnectionInfos");
     getWriter().println("Free connections: " + numberOfFreeConnections);

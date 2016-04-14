@@ -33,11 +33,11 @@ public class JavaMemoryMonitor extends AbstractJmxMonitor
     final ObjectName memoryConnectionBeanName = new ObjectName(MBEAN_NAME);
     final CompositeData memoryUsage = (CompositeData) getMbeanServer().getAttribute(memoryConnectionBeanName,
                                                                                     "HeapMemoryUsage");
-    final long committed = ((long) memoryUsage.get("committed"));
+    final long committed = ((Long) memoryUsage.get("committed"));
     final long committedMega = committed / 1024 / 1024;
-    final long used = (long) memoryUsage.get("used");
+    final long used = (Long) memoryUsage.get("used");
     final long usedMega = used / 1024 / 1024;
-    final long max = (long) memoryUsage.get("max");
+    final long max = (Long) memoryUsage.get("max");
     getWriter().println("Committed: " + committedMega + " MB (" + (100*committed/max) + "% of maximum)");
     getWriter().println("Used: " + usedMega + " MB (" + (100*used/committed) + "% of committed) (" + (100*used/max) + "% of maximum)");
     getWriter().println();

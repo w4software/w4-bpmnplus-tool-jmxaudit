@@ -18,7 +18,7 @@ Installation
 
 ### Requirements
 
-Java JRE 1.7 is required to run this tool.
+Java JRE 1.6 is required to run this tool.
 
 
 ### Extraction
@@ -51,6 +51,7 @@ Following switches can be enabled/disabled using either + or - prefixes
     +/-mprincipal   audit session principals     (default: enabled)
     +/-mtransaction audit transaction principals (default: enabled)
     +/-mthread      audit threads                (default: disabled)
+    +/-mheap        audit heap memory............(default: disabled)
 
 
 ### Examples
@@ -110,7 +111,7 @@ on stdout or in a log file.
 License
 -------
 
-Copyright (c) 2015, W4 S.A. 
+Copyright (c) 2015-2016, W4 S.A. 
 
 This project is licensed under the terms of the MIT License (see LICENSE file)
 
