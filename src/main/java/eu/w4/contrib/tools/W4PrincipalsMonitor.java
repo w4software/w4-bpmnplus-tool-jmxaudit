@@ -16,7 +16,14 @@ import javax.management.ReflectionException;
 public class W4PrincipalsMonitor extends AbstractJmxMonitor
 {
 
-  public static final String USERS_PRINCIPALS_MBEAN = "eu.w4.engine:instance=default,type=Users,name=Principals";
+  public static final String USERS_PRINCIPALS_MBEAN = "eu.w4.engine:instance=%INSTANCE%,type=Users,name=Principals";
+
+  private String _instanceName;
+
+  public W4PrincipalsMonitor(final String instanceName)
+  {
+    _instanceName = instanceName;
+  }
 
   @Override
   public void dump()
@@ -24,7 +31,7 @@ public class W4PrincipalsMonitor extends AbstractJmxMonitor
     AttributeNotFoundException, MBeanException
   {
     getWriter().printTitle("Principals");
-    final ObjectName usersPrincipalsBeanName = new ObjectName(USERS_PRINCIPALS_MBEAN);
+    final ObjectName usersPrincipalsBeanName = new ObjectName(USERS_PRINCIPALS_MBEAN.replaceAll("%INSTANCE%", _instanceName));
     final Map<String, String> principals = (Map<String, String>) getMbeanServer().getAttribute(usersPrincipalsBeanName,
                                                                                                "Principals");
     final List<List<String>> table = new ArrayList<List<String>>();

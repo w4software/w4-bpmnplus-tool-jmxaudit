@@ -35,6 +35,8 @@ public class JmxAuditLogger
 
   private String _password;
 
+  private String _instanceName;
+
   private MBeanServerConnection _mbeanServer;
 
   private JMXConnector _jmx;
@@ -43,12 +45,13 @@ public class JmxAuditLogger
 
   private List<JmxMonitor> _monitors;
 
-  public JmxAuditLogger(final String host, final String port, final String login, final String password)
+  public JmxAuditLogger(final String host, final String port, final String login, final String password, final String instanceName)
   {
     _host = host;
     _port = port;
     _login = login;
     _password = password;
+    _instanceName = instanceName;
     _monitors = new ArrayList<JmxMonitor>();
     _output = new JmxAuditWriter(System.err);
     connect();
@@ -183,6 +186,7 @@ public class JmxAuditLogger
     String login = "admin";
     String password = "admin";
     String delay = "5000";
+    String instanceName = "default";
     String file = null;
     final Set<String> audits = new HashSet<String>(Arrays.asList("pool", "principal", "transaction"));
     final LinkedList<String> argList = new LinkedList<String>(Arrays.asList(args));
@@ -213,6 +217,10 @@ public class JmxAuditLogger
       {
         delay = argList.poll();
       }
+      else if ("-i".equals(arg) || "--instance".equals(arg))
+      {
+        instanceName = argList.poll();
+      }
       else if ("-f".equals(arg) || "--file".equals(arg))
       {
         file = argList.poll();
@@ -232,7 +240,7 @@ public class JmxAuditLogger
       }
     }
 
-    final JmxAuditLogger jmxAuditLogger = new JmxAuditLogger(host, port, login, password);
+    final JmxAuditLogger jmxAuditLogger = new JmxAuditLogger(host, port, login, password, instanceName);
     if (file == null || "".equals(file) || "-".equals(file))
     {
       jmxAuditLogger.setOutput(System.out);
@@ -244,18 +252,18 @@ public class JmxAuditLogger
 
     if (audits.contains("pool"))
     {
-      jmxAuditLogger.addMonitor(new W4DbPoolMonitor());
-      jmxAuditLogger.addMonitor(new W4ReservedPoolMonitor());
+      jmxAuditLogger.addMonitor(new W4DbPoolMonitor(instanceName));
+      jmxAuditLogger.addMonitor(new W4ReservedPoolMonitor(instanceName));
     }
 
     if (audits.contains("transaction"))
     {
-      jmxAuditLogger.addMonitor(new W4TransactionMonitor());
+      jmxAuditLogger.addMonitor(new W4TransactionMonitor(instanceName));
     }
 
     if (audits.contains("principal"))
     {
-      jmxAuditLogger.addMonitor(new W4PrincipalsMonitor());
+      jmxAuditLogger.addMonitor(new W4PrincipalsMonitor(instanceName));
     }
 
     if (audits.contains("thread"))

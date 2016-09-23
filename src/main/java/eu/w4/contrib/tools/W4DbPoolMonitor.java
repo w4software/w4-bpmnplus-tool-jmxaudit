@@ -12,11 +12,18 @@ import javax.management.openmbean.TabularData;
 
 public class W4DbPoolMonitor extends AbstractJmxMonitor
 {
-  private static String DATABASE_CONNECTION_MBEAN = "eu.w4.engine:instance=default,type=DatabaseConnectionPool,name=Engine";
+  private static String DATABASE_CONNECTION_MBEAN = "eu.w4.engine:instance=%INSTANCE%,type=DatabaseConnectionPool,name=Engine";
+
+  private String _instanceName;
+
+  public W4DbPoolMonitor(final String instanceName)
+  {
+    _instanceName = instanceName;
+  }
 
   protected String getMBeanName()
   {
-    return DATABASE_CONNECTION_MBEAN;
+    return DATABASE_CONNECTION_MBEAN.replaceAll("%INSTANCE%", _instanceName);
   }
 
   protected String getTitle()
@@ -30,7 +37,7 @@ public class W4DbPoolMonitor extends AbstractJmxMonitor
     AttributeNotFoundException, MBeanException
   {
     getWriter().printTitle(getTitle());
-    final ObjectName databaseConnectionBeanName = new ObjectName(DATABASE_CONNECTION_MBEAN);
+    final ObjectName databaseConnectionBeanName = new ObjectName(getMBeanName());
     final int numberOfFreeConnections = (Integer) getMbeanServer().getAttribute(databaseConnectionBeanName,
                                                                             "NumberOfFreeConnections");
     final int poolMaximumSize = (Integer) getMbeanServer().getAttribute(databaseConnectionBeanName, "PoolMaximumSize");

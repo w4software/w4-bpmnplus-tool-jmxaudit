@@ -13,7 +13,14 @@ import javax.management.openmbean.TabularData;
 public class W4TransactionMonitor extends AbstractJmxMonitor
 {
 
-  private static String PRINCIPALS_TRANSACTION_MBEAN = "eu.w4.engine:instance=default,type=PrincipalsTransactions";
+  private static String PRINCIPALS_TRANSACTION_MBEAN = "eu.w4.engine:instance=%INSTANCE%,type=PrincipalsTransactions";
+
+  private String _instanceName;
+
+  public W4TransactionMonitor(final String instanceName)
+  {
+    _instanceName = instanceName;
+  }
 
   @Override
   public void dump()
@@ -21,7 +28,7 @@ public class W4TransactionMonitor extends AbstractJmxMonitor
     AttributeNotFoundException, MBeanException
   {
     getWriter().printTitle("Transaction Principals");
-    final ObjectName principalsTransactionBeanName = new ObjectName(PRINCIPALS_TRANSACTION_MBEAN);
+    final ObjectName principalsTransactionBeanName = new ObjectName(PRINCIPALS_TRANSACTION_MBEAN.replaceAll("%INSTANCE%", _instanceName));
     final TabularData infos = (TabularData) getMbeanServer().getAttribute(principalsTransactionBeanName, "Infos");
     getWriter().printTabularData(infos,
                                  "01.Principal",
