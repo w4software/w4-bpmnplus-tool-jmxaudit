@@ -41,6 +41,7 @@ Use the following command to run the utility
     -w | --password set BPMN+ Engine password           (default 'admin')
     -f | --file     switch output to given file         (stdout if not specified)
     -d | --delay    set delay in ms between two reports (default '5000')
+    -i | --instance set instance name of BPMN+ Engine   (default 'default)
 
 
 ### Switches
